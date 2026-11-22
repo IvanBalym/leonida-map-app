@@ -1,0 +1,19 @@
+{
+  "name": "leonida-map-app",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "GTA 6 State of Leonida interactive map — PWA + Telegram Mini App (Vite + Vanilla JS + Leaflet)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "tiles:serve": "npx --yes serve ../leonida-map-tiles/public -l 8080 --cors"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

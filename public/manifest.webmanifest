@@ -1,0 +1,14 @@
+{
+  "name": "Leonida Map — GTA 6",
+  "short_name": "Leonida Map",
+  "description": "Интерактивная карта State of Leonida: регионы, секреты и прогресс",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#070b16",
+  "theme_color": "#070b16",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

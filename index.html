@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#070b16" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="description" content="Интерактивная карта GTA 6 — State of Leonida: регионы, секреты, коллекционки и прогресс." />
+  <title>Leonida Map — GTA 6</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+  <!-- Telegram WebApp SDK: harmless outside Telegram (initData is empty there) -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div id="map" aria-label="Карта Leonida"></div>
+
+  <header class="topbar">
+    <button class="btn btn--icon" id="btn-filters" aria-label="Фильтры" aria-controls="panel" aria-expanded="false">☰</button>
+    <div class="brand">LEONIDA<span>MAP</span></div>
+    <div class="progress-pill" id="progress-pill" title="Найдено всего">0 / 0</div>
+  </header>
+
+  <aside class="panel" id="panel" aria-hidden="true">
+    <div class="panel__head">
+      <input class="search" id="search" type="search" placeholder="Поиск по названию…" autocomplete="off" enterkeyhint="search" />
+      <button class="btn btn--icon" id="btn-panel-close" aria-label="Закрыть">✕</button>
+    </div>
+    <div class="panel__progress">
+      <div class="bar"><i id="total-bar"></i></div>
+      <span id="total-text">Найдено 0 / 0</span>
+    </div>
+    <div class="panel__row">
+      <span class="panel__label">Категории</span>
+      <button class="link" id="cats-all">все</button>
+      <button class="link" id="cats-none">ничего</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <label class="toggle"><input type="checkbox" id="hide-found" /> Скрыть найденные</label>
+    <ul class="results" id="results"></ul>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <div class="hud" id="hud" hidden>
+    <div class="hud__name" id="hud-name"></div>
+    <div class="hud__stat"><span id="hud-text"></span><div class="bar"><i id="hud-bar"></i></div></div>
+  </div>
+
+  <section class="sheet" id="sheet" aria-hidden="true" role="dialog" aria-labelledby="sheet-title">
+    <div class="sheet__grip" id="sheet-grip"></div>
+    <button class="btn btn--icon sheet__close" id="sheet-close" aria-label="Закрыть">✕</button>
+    <div class="sheet__media"><img id="sheet-img" alt="" loading="lazy" /></div>
+    <div class="sheet__body">
+      <div class="sheet__meta"><span class="badge" id="sheet-cat"></span><span class="sheet__region" id="sheet-region"></span></div>
+      <h2 class="sheet__title" id="sheet-title"></h2>
+      <p class="sheet__desc" id="sheet-desc"></p>
+      <div class="sheet__actions">
+        <label class="found-check"><input type="checkbox" id="sheet-found" /><span>Найдено</span></label>
+        <button class="btn" id="sheet-share">🔗 Поделиться ссылкой</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal" id="pro-modal" hidden role="dialog" aria-labelledby="pro-title">
+    <div class="modal__card">
+      <div class="modal__glow"></div>
+      <h3 id="pro-title">Лимит бесплатной версии</h3>
+      <p id="pro-text"></p>
+      <ul class="pro-list">
+        <li>Безлимитные отметки «Найдено»</li>
+        <li>Синхронизация прогресса между устройствами</li>
+        <li>Новые метки раньше всех</li>
+      </ul>
+      <div class="modal__actions">
+        <button class="btn btn--primary" id="pro-buy">Получить PRO</button>
+        <button class="btn" id="pro-later">Позже</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="boot" id="boot"><div class="boot__spinner"></div><span>Загрузка карты…</span></div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+# Build and deploy to GitHub Pages. Set repo Variables (Settings -> Secrets and variables -> Actions -> Variables):
+#   VITE_CDN_BASE_URL (required), VITE_TG_BOT, VITE_TG_APP, VITE_FREE_LIMIT, VITE_PRO_URL
+name: Deploy app to GitHub Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency: { group: pages, cancel-in-progress: true }
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - run: npm install
+      - run: npm run build
+        env:
+          VITE_CDN_BASE_URL: ${{ vars.VITE_CDN_BASE_URL }}
+          VITE_TILES_PATH: ${{ vars.VITE_TILES_PATH || 'tiles' }}
+          VITE_TG_BOT: ${{ vars.VITE_TG_BOT }}
+          VITE_TG_APP: ${{ vars.VITE_TG_APP }}
+          VITE_FREE_LIMIT: ${{ vars.VITE_FREE_LIMIT || '25' }}
+          VITE_PRO_URL: ${{ vars.VITE_PRO_URL }}
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: dist }
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: "${{ steps.deployment.outputs.page_url }}" }
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
